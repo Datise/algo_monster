@@ -1,4 +1,4 @@
-from nodes import Node
+from node import Node
 def build_tree(nodes, f):
     try:
         val = next(nodes)
