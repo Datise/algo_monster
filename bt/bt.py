@@ -1,11 +1,9 @@
-class Node():
-    def __init__(self, val, left, right):
-        self.val = val
-        self.left = left
-        self.right = right
-
+from nodes import Node
 def build_tree(nodes, f):
-    val = next(nodes)
+    try:
+        val = next(nodes)
+    except StopIteration:
+        return None
     if val == "x":
         return None
     left = build_tree(nodes, f)
