@@ -4,7 +4,7 @@ from dfs import DFS
 
 class TestDFS(unittest.TestCase):
     def test_dfs(self):
-        test_tree = iter("3 4 5 x x 7 8".split())
+        test_tree = iter("3 4 5 x x 7 x x 8 x x".split())
         root = build_tree(test_tree, int)
         found = DFS().search(root, 7)
         self.assertEqual(found.val, 7)
@@ -18,31 +18,37 @@ class TestDFS(unittest.TestCase):
         self.assertEqual(found3.val, 3)
 
     def test_dfs_global_search(self):
-        test_tree = iter("3 4 5 x x 7 8".split())
+        test_tree = iter("3 4 5 x x 7 x x 8 x x".split())
         root = build_tree(test_tree, int)
         found = DFS().search_global(root, 5)
         self.assertEqual(found.val, 5)
 
     def test_dfs_find_highest(self):
-        test_tree = iter("3 4 5 x x 7 8".split())
+        test_tree = iter("3 4 5 x x 7 x x 8 x x".split())
         root = build_tree(test_tree, int)
         highest = DFS().find_highest_val(root)
         self.assertEqual(highest, 8)
 
     def test_dfs_find_max_depth(self):
-        test_tree = iter("3 4 5 x x 7 8".split())
+        test_tree = iter("3 4 5 x x 7 x x 8 x x".split())
         root = build_tree(test_tree, int)
         depth = DFS().find_max_depth(root)
-        self.assertEqual(depth, 2)
+        self.assertEqual(2, depth)
 
     def test_visible_tree_nodes(self):
-        test_tree = iter("3 4 5 x x 7 8".split())
+        test_tree = iter("3 4 5 x x 7 x x 8 x x".split())
         root = build_tree(test_tree, int)
         num_visible = DFS().visible_tree_nodes(root)
-        self.assertEqual(num_visible, 4)
+        self.assertEqual(5, num_visible)
 
-    # def test_visible_tree_nodes_rev(self):
-    #     test_tree = iter("5 4 3 x x 8 x x 6".split())
-    #     root = build_tree(test_tree, int)
-    #     num_visible = DFS().visible_tree_nodes(root)
-    #     self.assertEqual(num_visible, 3)
+    def test_vis_tree_nodes_rev(self):
+        test_tree = iter("5 4 3 x x 8 x x 6 x x".split())
+        root = build_tree(test_tree, int)
+        num_visible = DFS().visible_tree_nodes(root)
+        self.assertEqual(3, num_visible)
+
+    def test_vis_tree_nodes_interior(self):
+        test_tree = iter("5 4 3 x 9 8 10 12 6 7 x x 9 x x".split())
+        root = build_tree(test_tree, int)
+        num_visible = DFS().visible_tree_nodes(root)
+        self.assertEqual(8, num_visible)

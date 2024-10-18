@@ -1,5 +1,7 @@
 # global var for educational purposes to show
 # different return strategies
+import pdb
+
 global_found = None
 class DFS:
 
@@ -38,31 +40,32 @@ class DFS:
         return max(node.val, left_highest, right_highest)
 
     def find_max_depth(self, root) -> int:
-        def max_depth(node):
-            if node is root:
+        def max_depth(root):
+            if not root:
                 return 0
-
             return max(max_depth(root.left), max_depth(root.right)) + 1
 
         return max_depth(root) - 1 if root else 0
 
-    def visible_tree_nodes(self, node, prev_vals=None):
+    def visible_tree_nodes(self, root):
+        def visible(node, prev_vals):
+            if node is None:
+                return 0
 
-        if node is None:
-            return 0
-
-        biggest = 0
-        if prev_vals is None:
-            prev_vals = []
-            biggest = 1
-
-        for val in prev_vals:
-            if node.val > val:
+            biggest = 0
+            if len(prev_vals) is 0:
                 biggest = 1
 
-        prev_vals.append(node.val)
+            for val in prev_vals:
+                if node.val > val:
+                    biggest = 1
 
-        left = self.visible_tree_nodes(node.left, prev_vals)
-        right = self.visible_tree_nodes(node.right, prev_vals)
+            prev_vals.append(node.val)
 
-        return max(left, right) + biggest
+            left = visible(node.left, prev_vals)
+            right = visible(node.right, prev_vals)
+
+            prev_vals.pop()
+            return left + right + biggest
+
+        return visible(root, [])
