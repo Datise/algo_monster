@@ -48,24 +48,43 @@ class DFS:
         return max_depth(root) - 1 if root else 0
 
     def visible_tree_nodes(self, root):
-        def visible(node, prev_vals):
+        def visible(node, max_so_far):
             if node is None:
                 return 0
 
-            biggest = 0
-            if len(prev_vals) is 0:
-                biggest = 1
+            total = 0
+            if node.val > max_so_far:
+                total += 1
 
-            for val in prev_vals:
-                if node.val > val:
-                    biggest = 1
+            total += visible(node.left, max(max_so_far, node.val))
+            total += visible(node.right, max(max_so_far, node.val))
 
-            prev_vals.append(node.val)
+            return total
 
-            left = visible(node.left, prev_vals)
-            right = visible(node.right, prev_vals)
+        return visible(root, -1)
 
-            prev_vals.pop()
-            return left + right + biggest
+    def is_balanced(self, root):
+        def check(left, right):
+            return left - right <= 1 and left - right >= -1
 
-        return visible(root, [])
+        def balanced(node):
+            if node is None:
+                return 0
+
+            return max(balanced(node.left), balanced(node.right)) + 1
+
+        left = balanced(root.left)
+        right = balanced(root.right)
+        return check(left, right)
+
+    # def is_sub_tree(self, parent_root, child_root):
+    #
+    #     def search(node):
+    #         if node is None:
+    #             return 0
+    #
+    #         if node = child_root.val:
+    #
+    #
+    #     search(parent)
+

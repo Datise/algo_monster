@@ -51,4 +51,40 @@ class TestDFS(unittest.TestCase):
         test_tree = iter("5 4 3 x 9 8 10 12 6 7 x x 9 x x".split())
         root = build_tree(test_tree, int)
         num_visible = DFS().visible_tree_nodes(root)
-        self.assertEqual(8, num_visible)
+        self.assertEqual(4, num_visible)
+
+    def test_is_balanced(self):
+        test_tree = iter("3 4 5 x x 7 x x 8 x x".split())
+        root = build_tree(test_tree, int)
+        balanced = DFS().is_balanced(root)
+        self.assertEqual(True, balanced)
+
+    def test_is_balanced(self):
+        test_tree = iter("3 4 5 x x 7 x x 8 x x".split())
+        root = build_tree(test_tree, int)
+        balanced = DFS().is_balanced(root)
+        self.assertEqual(True, balanced)
+
+    def test_is_not_balanced(self):
+        test_tree = iter("3 4 5 x x 7 10 14 22 x x x x x 8 x x".split())
+        root = build_tree(test_tree, int)
+        balanced = DFS().is_balanced(root)
+        self.assertEqual(False, balanced)
+
+    def test_is_balanced_only_root(self):
+        test_tree = iter("3".split())
+        root = build_tree(test_tree, int)
+        balanced = DFS().is_balanced(root)
+        self.assertEqual(True, balanced)
+
+    def test_is_balanced_root_plus_1(self):
+        test_tree = iter("3 4 x".split())
+        root = build_tree(test_tree, int)
+        balanced = DFS().is_balanced(root)
+        self.assertEqual(True, balanced)
+
+    def test_is_unbalanced_one_sided(self):
+        test_tree = iter("3 4 5 6 7 x x x x x x".split())
+        root = build_tree(test_tree, int)
+        balanced = DFS().is_balanced(root)
+        self.assertEqual(False, balanced)
