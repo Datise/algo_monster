@@ -77,14 +77,15 @@ class DFS:
         right = balanced(root.right)
         return check(left, right)
 
-    # def is_sub_tree(self, parent_root, child_root):
-    #
-    #     def search(node):
-    #         if node is None:
-    #             return 0
-    #
-    #         if node = child_root.val:
-    #
-    #
-    #     search(parent)
+    def is_same_tree(self, tree1, tree2):
+        if tree1 is None and tree2 is None:
+            return True
+        if tree1 is None or tree2 is None:
+            return False
+        return (tree1.val == tree2.val and self.is_same_tree(tree1.left, tree2.left) and self.is_same_tree(tree1.right, tree2.right))
+
+    def subtree_of_another_tree(self, root, sub_root) -> bool:
+        if not root:
+            return False
+        return self.is_same_tree(root, sub_root) or self.subtree_of_another_tree(root.left, sub_root) or self.subtree_of_another_tree(root.right, sub_root)
 

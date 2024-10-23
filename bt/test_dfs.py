@@ -1,5 +1,5 @@
 import unittest
-from bt import build_tree
+from bt import build_tree, print_tree
 from dfs import DFS
 
 class TestDFS(unittest.TestCase):
@@ -88,3 +88,21 @@ class TestDFS(unittest.TestCase):
         root = build_tree(test_tree, int)
         balanced = DFS().is_balanced(root)
         self.assertEqual(False, balanced)
+
+    def test_is_sub_tree(self):
+        root = build_tree(iter("3 4 5 6 x x 7".split()), int)
+        sub_root = build_tree(iter("5 6 x x 7".split()), int)
+        same = DFS().subtree_of_another_tree(root, sub_root)
+        self.assertEqual(True, same)
+
+    def test_is_sub_tree_btm(self):
+        root = build_tree(iter("3 4 5 6 x x 7 8 9 x x".split()), int)
+        sub_root = build_tree(iter("7 8 9 x x".split()), int)
+        same = DFS().subtree_of_another_tree(root, sub_root)
+        self.assertEqual(True, same)
+
+    def test_is_not_sub_tree(self):
+        root = build_tree(iter("3 4 5 6 x x 7".split()), int)
+        sub_root = build_tree(iter("5 4 x x 7".split()), int)
+        same = DFS().subtree_of_another_tree(root, sub_root)
+        self.assertEqual(False, same)
