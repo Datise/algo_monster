@@ -109,8 +109,8 @@ class Game
 end
 
 
-game = Game.new
-game.add_card("hearts", "Q")
-game.add_card("spades", "K")
-game.add_hand
-puts game.hand_string(0)
+# game = Game.new
+# game.add_card("hearts", "Q")
+# game.add_card("spades", "K")
+# game.add_hand
+# puts game.hand_string(0)
