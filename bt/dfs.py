@@ -1,6 +1,7 @@
 # global var for educational purposes to show
 # different return strategies
 import pdb
+from node import Node
 
 global_found = None
 class DFS:
@@ -82,10 +83,21 @@ class DFS:
             return True
         if tree1 is None or tree2 is None:
             return False
-        return (tree1.val == tree2.val and self.is_same_tree(tree1.left, tree2.left) and self.is_same_tree(tree1.right, tree2.right))
+        
+        return tree1.val == tree2.val and self.is_same_tree(tree1.left, tree2.left) and self.is_same_tree(tree1.right, tree2.right)
+        
 
-    def subtree_of_another_tree(self, root, sub_root) -> bool:
-        if not root:
+
+    def sub_tree_of_another_tree(self, root, subroot):
+        if root is None:
             return False
-        return self.is_same_tree(root, sub_root) or self.subtree_of_another_tree(root.left, sub_root) or self.subtree_of_another_tree(root.right, sub_root)
 
+        if self.is_same_tree(root, subroot):
+            return True
+        
+        return self.sub_tree_of_another_tree(root.left, subroot) or self.sub_tree_of_another_tree(root.right, subroot)
+
+    def invert_tree(self, root):
+        if root is None:
+            return None
+        return Node(root.val, self.invert_tree(root.right), self.invert_tree(root.left))

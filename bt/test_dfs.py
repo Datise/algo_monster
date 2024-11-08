@@ -92,17 +92,23 @@ class TestDFS(unittest.TestCase):
     def test_is_sub_tree(self):
         root = build_tree(iter("3 4 5 6 x x 7".split()), int)
         sub_root = build_tree(iter("5 6 x x 7".split()), int)
-        same = DFS().subtree_of_another_tree(root, sub_root)
+        same = DFS().sub_tree_of_another_tree(root, sub_root)
         self.assertEqual(True, same)
 
     def test_is_sub_tree_btm(self):
         root = build_tree(iter("3 4 5 6 x x 7 8 9 x x".split()), int)
         sub_root = build_tree(iter("7 8 9 x x".split()), int)
-        same = DFS().subtree_of_another_tree(root, sub_root)
+        same = DFS().sub_tree_of_another_tree(root, sub_root)
         self.assertEqual(True, same)
 
     def test_is_not_sub_tree(self):
         root = build_tree(iter("3 4 5 6 x x 7".split()), int)
         sub_root = build_tree(iter("5 4 x x 7".split()), int)
-        same = DFS().subtree_of_another_tree(root, sub_root)
+        same = DFS().sub_tree_of_another_tree(root, sub_root)
         self.assertEqual(False, same)
+
+    def test_invert_simple(self):
+        root = build_tree(iter("3 4 5 6 x x 7".split()), int)
+        flipped = DFS().invert_tree(root)
+        self.assertEqual(root.val, flipped.val)
+        self.assertEqual(root.left.val, flipped.right.val)
