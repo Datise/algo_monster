@@ -135,3 +135,34 @@ def letter_combination_phone(digits)
   dfs.call(0, [])
   return res 
 end
+
+def is_valid_palindrome?(subdrome)
+  subdrome == subdrome.reverse && !subdrome.empty?
+end
+
+def palindromes(s)
+  # "aab" [["aa","b"],["a","a","b"]]
+  res = []
+  n = s.length 
+
+  dfs = lambda do |start_index, path|
+    puts "path: #{path}"
+    if path.length == n
+      res.append(path)
+      return 
+    end
+
+    (start_index + 1).upto(n) do |end_index|
+      puts "startI: #{start_index}"
+      puts "endI: #{end_index}"
+      subdrome = s[start_index..end_index]
+      puts "#{subdrome}"
+      if is_valid_palindrome?(subdrome)
+        dfs.call(start_index + 1, path.append(subdrome))
+      end
+    end
+  end
+  dfs.call(0, [])
+  puts res
+  return res 
+end
