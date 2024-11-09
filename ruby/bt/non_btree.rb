@@ -64,19 +64,24 @@ class NonBTreeLetters < NonBTree
     return NonBNode.new(val, children)
   end
 
-  # def dfs(start_index, path)
-  #   if is_leaf(start_index)
-  #     report(path)
-  #     return
+  def dfs(start_index, path)
+    if is_leaf(start_index)
+      report(path)
+      return
+    end
 
-  #   get_edges.each do | edge |
-  #     path.add(edge)
-  #     dfs(start_index + 1, path)
-  #     path.pop()
-  #   end
-  # end
+    get_edges.each do | edge |
+      path.add(edge)
+      dfs(start_index + 1, path)
+      path.pop()
+    end
+  end
 
-  private 
+  private
+
+  def report(path)
+
+  end
 
   def is_leaf(val)
     @total_nodes.include?(val)
@@ -85,4 +90,48 @@ class NonBTreeLetters < NonBTree
   def get_edges
     @edge_nodes.include?(val)
   end
-end 
+end
+
+
+def letter_combination_simple(n)
+  res = []
+  dfs = lambda do |start_index, path| 
+    if start_index == n
+      res.append(path.join(""))
+      return 
+    end 
+
+    "ab".each_char do | l |
+      path.append(l)
+      dfs.call(start_index + 1, path)
+      path.pop
+    end
+  end
+  dfs.call(0, [])
+  return res
+end
+
+def letter_combination_phone(digits)
+  keyboard = {"2": "abc", "3": "def", "4": "ghi", 
+"5": "jkl", "6": "mno", "7": "pqrs", 
+"8": "tuv", "9": "wxyz"}
+  res = []
+  
+  dfs = lambda do |start_index, path| 
+    # leaf/end condition
+    if start_index == digits.length 
+      res.append(path.join(""))
+      return
+    end
+
+    # edge/creating function
+    next_num = digits[start_index]
+    keyboard[next_num.to_sym].each_char do |letter|
+      path.append(letter)
+      dfs.call(start_index + 1, path)
+      path.pop
+    end
+  end
+  dfs.call(0, [])
+  return res 
+end
