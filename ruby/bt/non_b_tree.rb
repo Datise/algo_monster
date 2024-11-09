@@ -46,3 +46,43 @@ class NonBTree
     return res
   end
 end
+
+
+class NonBTreeLetters < NonBTree
+  attr_accessor :root, :total_nodes
+  def initialize(int)
+    self.edge_nodes = ('a'..'z').to_a[0..int -1]
+    self.total_nodes = @edge_nodes.prepend(nil)
+    self.root = build(@total_nodes.each)
+  end
+
+  def build(nodes)
+    val = nodes.next rescue nil
+    return " " if val.nil?
+    
+    children = @total_nodes.map{|x| val + x}.each { build(nodes) }
+    return NonBNode.new(val, children)
+  end
+
+  # def dfs(start_index, path)
+  #   if is_leaf(start_index)
+  #     report(path)
+  #     return
+
+  #   get_edges.each do | edge |
+  #     path.add(edge)
+  #     dfs(start_index + 1, path)
+  #     path.pop()
+  #   end
+  # end
+
+  private 
+
+  def is_leaf(val)
+    @total_nodes.include?(val)
+  end 
+
+  def get_edges
+    @edge_nodes.include?(val)
+  end
+end 
