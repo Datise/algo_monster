@@ -1,4 +1,4 @@
-from node import Node
+from node import Node, NonBNode
 def build_tree(nodes, f):
     try:
         val = next(nodes)
@@ -50,3 +50,40 @@ def validate_bts(root):
         return False 
     
     return validate_bts(root.left) and validate_bts(root.right)
+
+## Ternary tree
+
+def build_mc_tree(nodes, f):
+    val = next(nodes)
+    num = int(next(nodes))
+    children = [build_mc_tree(nodes, f) for _ in range(num)]
+    return NonBNode(f(val), children)
+
+def print_mc_tree(node, level=0):
+    # Print the current node with indentation based on its level in the tree
+    indent = " " * (level * 4)  # 4 spaces per level of depth for indentation
+
+    print(f"{indent}- {node.val}")
+
+    # Recursively print each child, increasing the level by 1
+    for child in node.children:
+        print_mc_tree(child, level + 1)
+
+def ternary_tree_paths(root: NonBNode):
+    def dfs(root, path, res):
+        # exit condition: when a leaf node is reached, append the path to the results
+        if all(c is None for c in root.children):
+            res.append('->'.join(path) + '->' + str(root.val))
+            return
+
+
+        # DFS on each non-null child
+        for child in root.children:
+            if child is not None:
+                path.append(str(root.val))
+                dfs(child, path, res)
+                path.pop()
+    res = []
+    if root: dfs(root, [], res)
+
+    return res
