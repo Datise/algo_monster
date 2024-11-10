@@ -34,6 +34,49 @@ class BTree
     return res
   end
 
+  def zig_zag
+    res = []
+    queue = [self.root]
+    left_to_right = false
+    while queue.length > 0
+      prev_level = []
+      queue.length.times do |index|
+        node = queue.shift
+        if left_to_right
+          prev_level.unshift(node.val)
+        else
+          prev_level.append(node.val)
+        end
+        node.children.each do |child|
+          next if child.nil?
+          queue.append(child)
+        end
+      end
+      left_to_right = !left_to_right
+      res.append(prev_level)
+    end
+    return res
+  end
+
+  def min_depth
+    res = []
+    queue = [self.root]
+    while queue.length
+      prev_level = []
+      queue.length.times do 
+        node = queue.shift 
+        return res.length if node.nil?
+        prev_level.append(node)
+        node.children.each do |child|
+          return res.length if child.nil?
+          queue.append(child)
+        end
+      end
+      res.append(prev_level)
+    end
+    return res.length
+  end
+
   def print
     def p(node, level)
       if level == 0

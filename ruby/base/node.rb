@@ -4,10 +4,14 @@ class Node
     self.val = val 
     self.left = left
     self.right = right
+    self.children = [self.left, self.right]
   end
 
-  def children
-    [self.left, self.right]
+  def print 
+    base = "#{self.val}"
+    base += self.left ? base + " left: #{self.left.val}" : base
+    base += self.right ? base + " right: #{self.right.val}" : base
+    puts base
   end
 end
 
